@@ -1,0 +1,11 @@
+﻿@Master['master']
+
+@Section['content']
+
+<form role="form" action="/@Context.ViewBag.MainPage?action=apply&id=@Model.ID" method="post" autocomplete="off" class="form-horizontal">
+
+    @Partial['@Context.ViewBag.ConfigPage'];
+
+</form>
+
+@EndSection

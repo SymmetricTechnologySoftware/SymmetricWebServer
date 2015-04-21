@@ -1,0 +1,14 @@
+﻿<Properties StartupItem="UserShared.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="DBUserShared.cs">
+    <Files>
+      <File FileName="DBUserShared.cs" Line="18" Column="18" />
+      <File FileName="FingerPrintHandle.cs" Line="14" Column="14" />
+      <File FileName="FingerPrintPacket.cs" Line="60" Column="60" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

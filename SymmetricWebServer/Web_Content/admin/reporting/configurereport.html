@@ -1,0 +1,197 @@
+﻿<style>
+/* centered columns styles */
+.row-centered {
+    text-align:center;
+}
+.col-centered {
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:left;
+    /* inline-block space fix */
+    margin-right:-4px;
+}
+</style>
+    <div class="container">
+		<div class="row row-right">
+			<div class="col-xs-3 col-right">
+				<input type="hidden" name="objectID" @IfNotNull.Model.ReportItem.ID value="@Model.ReportItem.ID" @EndIf class="form-control">
+				<div class="form-group">
+					<label>Reporting Group:</label>
+					<div class="input-group">
+					  <input type="text" class="form-control" name="GroupName" id="iGroupName"
+                          @IfNotNull.Model.ReportItem.GroupName value="@Model.ReportItem.GroupName" @EndIf >
+						<div class="input-group-btn">
+							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+							<ul id="iGroups" class="dropdown-menu dropdown-menu-right" role="menu">
+								@Each.Groups
+                                    <li value="@Current"><a href="#">@Current</a></li>
+				                @EndEach
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>	
+		</div>
+		<div class="row row-right" style="margin-top:5px">
+			<div class="col-xs-3 col-right">
+				<div class="form-group">
+					<label>Report Name:</label>
+					<input type="text" name="Name" 
+                        @IfNotNull.Model.ReportItem.Name value="@Model.ReportItem.Name" @EndIf class="form-control"/>
+				</div>
+			</div>
+		</div>
+        <div class="row row-right" style="margin-top:5px">
+			<div class="col-xs-3 col-right">
+				<div class="form-group">
+					<label>Connection:</label>
+					<select class="form-control" id="iConnection" name="Connection">
+				        @Each.Connections
+                            <option value="@Current.ID" @Current.IsSelected>@Current.Name</option>
+				        @EndEach
+					</select>
+				</div>
+			</div>
+		</div>
+
+        <div class="row row-right" style="margin-top:5px">
+			<div class="col-xs-3">
+				<div class="form-group">
+					<label>Forms:</label>
+					<select class="form-control" name="Form" onchange="this.form.submit()">
+						@Each.Forms
+                            <option value="@Current.ID" @Current.IsSelected>@Current.Name</option>
+				        @EndEach
+					</select>
+				</div>
+			</div>
+		</div>
+        @If.HasFormVarTags
+        <div class="row row-left">
+			<div class="col-xs-12 col-left">
+                <h4>Variables</h4>
+				@Each.FormVarTags
+                    <div class="form-group">
+                        <label>@Current.Name:</label>
+                        <input type="text" name="@Context.ViewBag.FormConst.@Current.Name" value="@Current.Value" class="form-control"/>
+                    </div>
+                @EndEach
+			</div>	
+		</div>
+        @EndIf
+        <div id="formSelectMessage">
+        </div>
+        @If.HasFormSelectTags
+         <div class="row row-left">
+			<div class="col-xs-12 col-left">
+				<h4>Select Queries</h4>
+                @Each.FormSelectTags
+                <div class="form-group">
+					<div class="form-group" id="query@Context.ViewBag.FormConst.@Current.Name" >
+					</div>
+                    <label>@Current.Name</label>
+                    <textarea rows="6" style="resize: none;" id="txt@Context.ViewBag.FormConst.@Current.Name"
+                            name="@Context.ViewBag.FormConst.@Current.Name" class="form-control">@Current.Value</textarea>
+                    <br/>
+					<button class="btn btn-primary" name="action" value="@Context.ViewBag.FormConst.@Current.Name" onclick="OnClickQuery(this.value); return false;" />
+					Test Query
+					</button>
+                </div>
+                <br>
+                @EndEach
+			</div>	
+		</div>
+        @EndIf
+
+		<div class="row row-right" style="margin-top:5px">
+			<div class="col-xs-3">
+				<div class="form-group">
+					<label>Template:</label>
+					<select class="form-control" name="Template" onchange="this.form.submit()">
+						@Each.Templates
+							<option value="@Current.ID" @Current.IsSelected>@Current.Name</option>  
+						@EndEach
+					</select>
+				</div>
+			</div>
+		</div>
+		
+        @If.HasTemplateVarTags
+        <div class="row row-left">
+			<div class="col-xs-3 col-left">
+				<h4>Variables</h4>
+				@Each.TemplateVarTags
+                    <div class="form-group">
+                        <label>@Current.Name:</label>
+                        <input type="text" name="@Context.ViewBag.TemplateConst.@Current.Name" value="@Current.Value" class="form-control"/>
+                    </div>
+                @EndEach
+			</div>	
+		</div>
+        @EndIf
+
+        @If.HasTemplateQueryTags
+        <div class="row row-left" style="margin-top:5px">
+			<div class="col-xs-12 col-left">
+				<h4>Queries</h4>
+                @Each.TemplateQueryTags
+				<div class="form-group">
+					<div class="form-group" id="query@Context.ViewBag.TemplateConst.@Current.Name" >
+					</div>
+                    <label>@Current.Name:</label>
+                    <textarea rows="6" style="resize: none;" id="txt@Context.ViewBag.TemplateConst.@Current.Name"
+                            name="@Context.ViewBag.TemplateConst.@Current.Name" class="form-control">@Current.Value</textarea>
+                    <br/>
+                    <button class="btn btn-primary" name="action" value="@Context.ViewBag.TemplateConst.@Current.Name" onclick="OnClickQuery(this.value); return false;" />Test Query</button>
+                </div>
+                <br>
+                @EndEach
+			</div>	
+		</div>
+        @EndIf
+
+        <div class="row row-centered" style="margin-top:5px">
+			<div class="input-group col-centered">
+                <button type="submit" class="btn btn-danger" name="action" value="cancel">Cancel</button>
+			    <button type="submit" class="btn btn-primary" name="action" value="save">Save</button>
+			</div>
+		</div>
+    </div>
+
+<script>
+    function OnClickQuery(clicked_value)
+    {
+
+        var i = document.getElementById("iConnection").selectedIndex;
+        var id = document.getElementById("iConnection").options[i].value;
+
+        var sqltext = document.getElementById("txt" + clicked_value).value;
+
+        $.get("/testquery", { connectionid: id, sql: sqltext }).done(function (data, status) {
+            var html = "";
+            if (data.success) {
+                html = "<div class=\"alert alert-success\">";
+                html += "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>";
+                html += "<strong>Success: </strong>The query has executed successfully.";
+                html += "</div>";
+            }
+            else {
+                html = "<div class=\"alert alert-danger\">";
+                html += "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>";
+                html += "<strong>Error: </strong>" + data.message;
+                html += "</div>";
+            }
+
+            var sqltext = document.getElementById("txt" + clicked_value).value;
+
+            var queryID = "#query" + clicked_value.replace(".", "\\.");
+
+            $(queryID).html(html);
+        });
+    }
+
+    $("#iGroups li").on("click", function () {
+        $("#iGroupName").val($(this).text());
+    });
+</script>

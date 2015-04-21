@@ -1,0 +1,11 @@
+﻿@Master['master']
+
+@Section['content']
+
+@IfNull.Context.ViewBag.MasterPageError
+
+@Partial['@Context.ViewBag.DisplayPage'];
+
+@EndIf
+
+@EndSection

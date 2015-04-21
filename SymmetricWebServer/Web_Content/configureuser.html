@@ -1,0 +1,109 @@
+﻿<style>
+    /* centered columns styles */
+    .row-centered {
+        text-align: center;
+    }
+
+    .col-centered {
+        display: inline-block;
+        float: none;
+        /* reset the text-align */
+        text-align: left;
+        /* inline-block space fix */
+        margin-right: -4px;
+    }
+
+    label#iDefaultDatabaseLabel {
+        width: auto;
+        padding-left: 4px;
+    }
+</style>
+
+	<input type="hidden" name="objectID" @IfNotNull.Model.ID value="@Model.ID" @EndIf class="form-control">
+
+    <div class="row row-right" style="margin-top:5px">
+        <div class="col-xs-4 col-right">
+            <div class="form-group">
+				<label>Full Name:</label>
+				<input type="text" name="fullname" value="@Model.FullName" class="form-control">
+            </div>
+		</div>
+	</div>
+    <div class="row row-right" style="margin-top:5px">
+        <div class="col-xs-4 col-right">
+            <div class="form-group">
+				<label>Description:</label>
+				<textarea name="description" rows="4" style="resize: none;width:100%">@Model.Description;</textarea>
+            </div>
+		</div>
+	</div>
+    <div class="row row-right" style="margin-top:5px">
+        <div class="col-xs-6 col-right">
+            <div class="form-group">
+				<label>Security Level:&nbsp;&nbsp;&nbsp;&nbsp;</label>
+				<input id="ex1" data-slider-enabled="@Model.StrEnableSecurityLevel" data-slider-id='ex1Slider' name="securityLevel" type="text" data-slider-min="0" data-slider-max="@Model.MaxSecurityLevel" data-slider-step="1" data-slider-value="@Model.SecurityLevel"/>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span id="ex1SliderVal"></span>
+            </div>
+		</div>
+	</div>
+   <div class="row row-right" style="margin-top:5px">
+        <div class="col-xs-4 col-right">
+            <div class="form-group">
+				<label>Password:</label>
+				<input type="password" name="password" class="form-control">
+            </div>
+		</div>
+	</div>
+    <div class="row row-right" style="margin-top:5px">
+        <div class="col-xs-4 col-right">
+            <div class="form-group">
+				<label>Confirm Password:</label>
+				<input type="password" name="confirmpassword" class="form-control">
+            </div>
+		</div>
+	</div>
+
+	<div class="row row-centered" style="margin-top:5px">
+		<div class="input-group col-centered">
+			<button type="submit" value="save" name="action" style="margin-left:5px" class="btn btn-primary">Save</button>
+            <button type="submit" value="cancel" name="action" style="margin-left:5px" class="btn btn-danger">Cancel</button>
+		</div>
+	</div>
+
+
+    <script type='text/javascript'>
+        function SetSliderText(value)
+        {
+            if (value >= @Model.AdminValue) {
+                $("#ex1SliderVal").text("Administrator");
+            }
+            else if (value >= @Model.ManagerValue) {
+                $("#ex1SliderVal").text("Manager");
+            }
+            else if (value >= @Model.SupervisorValue) {
+                $("#ex1SliderVal").text("Supervisor");
+            }
+            else if (value >= @Model.SeniorOperatorValue) {
+                $("#ex1SliderVal").text("Senior Operator");
+            }
+            else{
+                $("#ex1SliderVal").text("Junior Operator");
+            }
+
+        }
+            $(document).ready(function () {
+                /* Example 1 */
+                $('#ex1').slider({
+                    formatter: function (value) {
+                        return 'Current value: ' + value;
+                    }
+                });
+                SetSliderText(@Model.SecurityLevel);
+            });
+
+            $("#ex1").on("slide", function (slideEvt) {
+                SetSliderText(slideEvt.value);
+            });
+
+           
+    </script>

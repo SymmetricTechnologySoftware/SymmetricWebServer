@@ -1,0 +1,82 @@
+﻿@Master['master']
+
+@Section['content']
+
+<style>
+    /* centered columns styles */
+    .row-centered {
+        text-align: center;
+    }
+
+    .col-centered {
+        display: inline-block;
+        float: none;
+        /* reset the text-align */
+        text-align: left;
+        /* inline-block space fix */
+        margin-right: -4px;
+    }
+
+    label#iDefaultDatabaseLabel {
+        width: auto;
+        padding-left: 4px;
+    }
+</style>
+
+<form role="form" action="/environment" method="post" autocomplete="off" class="form-horizontal">
+    <div class="row row-right" style="margin-top:5px">
+        <div class="col-xs-4 col-right">
+            <div class="form-group">
+				<label>Server Port:</label>
+				<input type="text" name="port" value="@Model.Port" class="form-control">
+            </div>
+		</div>
+	</div>
+    <div class="row row-right" style="margin-top:5px">
+        <div class="col-xs-4 col-right">
+            <div class="form-group">
+                 <div class="checkbox">
+                    <label>
+                        <input name="startonlogin" @Model.StrStartOnLogin type="checkbox">Start Symmetric Web Server on login
+                    </label>
+                </div>
+            </div>
+		</div>
+	</div>
+    <div class="row row-right" style="margin-top:5px">
+        <div class="col-xs-4 col-right">
+            <div class="form-group">
+                 <div class="checkbox">
+                    <label>
+                        <input name="enableRestGetUsers" @Model.StrEnableRestGetUsers type="checkbox">Enable Get Rest Users
+                    </label>
+                </div>
+            </div>
+		</div>
+	</div>
+    <div class="row row-right" style="margin-top:5px">
+        <div class="col-xs-5 col-right">
+            <div class="form-group">
+                <label>IP Addresses:</label>
+                <br />
+                @Each.NetworkCards
+                <div class="checkbox">
+                    <label>
+                      <input name="@Current.Alias" @Current.StrIsActive type="checkbox">@Current.NetworkCardFullName
+                    </label>
+                </div>
+                <br />
+                @EndEach
+            </div>
+		</div>
+	</div>
+
+	<div class="row row-centered" style="margin-top:5px">
+		<div class="input-group col-centered">
+			<button type="submit" value="save" name="action" style="margin-left:5px" class="btn btn-primary">Save</button>
+		</div>
+	</div>
+
+</form>
+
+@EndSection

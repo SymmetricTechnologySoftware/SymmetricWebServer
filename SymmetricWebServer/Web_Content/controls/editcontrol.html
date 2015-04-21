@@ -1,0 +1,64 @@
+﻿@Master['master']
+
+@Section['content']
+
+<h3>@Model.Heading</h3>
+<br />
+<div class="input-group"> <span class="input-group-addon">Filter</span>
+    <input id="filter" type="text" class="form-control" placeholder="Type here...">
+</div>
+<br />
+<form role="form" action="/@Model.MainPage?action=add" method="post" style="margin-top: 5px; margin-bottom: 5px">
+    <button type="submit" class="btn btn-primary">Add @Model.Alias</button>
+</form>
+<table class="table table-striped table-bordered table-hover dataTable no-footer" id="dataTables-example" aria-describedby="dataTables-example_info">
+    <thead>
+        <tr role="row">
+            <th class="sorting_asc" tabindex="0" rowspan="1" colspan="1" aria-sort="ascending" style="width: 200px;">Group</th>
+            <th class="sorting_asc" tabindex="0" rowspan="1" colspan="1" aria-sort="ascending" style="width: 200px;">Name</th>
+            <th class="sorting" tabindex="0" rowspan="1" colspan="1" style="width: 160px;">Action</th>
+        </tr>
+    </thead>
+    <tbody class="searchable">
+        @Each.Items
+        <tr>
+            <td style="text-align: center; vertical-align: middle;">@Current.GroupName</td>
+            <td style="text-align: center; vertical-align: middle;">@Current.Name</td>
+            <td class=" ">
+                <form role="form" action="/@Model.MainPage?action=edit&id=@Current.ID" method="post" style="float:left;">
+                    <input type="hidden" name="id" value="@Current.ID" class="form-control">
+                    <button type="submit" class="btn btn-primary">Edit</button>
+                </form>
+                <form role="form" action="/@Model.MainPage?action=delete" style="float:left;" method="post">
+                    <input type="hidden" name="id" value="@Current.ID" class="form-control">
+                    <button type="submit" style="margin:0px 0px 0px 5px;" class="btn btn-danger popconfirm">Delete</button>
+                </form>
+            </td>
+        </tr>
+        @EndEach
+    </tbody>
+</table>
+
+<script>
+    $('#confirm-delete').on('show.bs.modal', function (e) {
+        $(this).find('.btn-ok').attr('href', $(e.relatedTarget).attr('href'));
+    });
+
+    ////////// Simple usage //////////
+    $(".popconfirm").popConfirm();
+
+    ////////// Complete usage //////////
+
+    // (example jquery click event)
+    $('#important_action').click(function () {
+        alert('You clicked, and valided this button !');
+    });
+
+    // Full featured example
+    $("[data-toggle='confirmation']").popConfirm({
+        title: "Really ?",
+        content: "I have warned you !",
+        placement: "bottom" // (top, right, bottom, left)
+    });
+</script>
+@EndSection

@@ -1,0 +1,76 @@
+﻿<style>
+/* centered columns styles */
+.row-centered {
+    text-align:center;
+}
+.col-centered {
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:left;
+    /* inline-block space fix */
+    margin-right:-4px;
+}
+
+.boxsizingBorder {
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+</style>
+<div class="container">
+	<input type="hidden" name="objectID" @IfNotNull.Model.ID value="@Model.ID" @EndIf class="form-control">
+
+    <div class="row row-right" style="margin-top:5px">
+        <div class="col-xs-3 col-right">
+            <div class="form-group">
+				<label>Name:</label>
+				<input type="text" name="Name" value="@Model.Name" class="form-control">
+            </div>
+		</div>
+	</div>
+	<div class="row row-right" style="margin-top:5px">
+		<div class="col-xs-12 col-right">
+            <div class="form-group">
+				<label>HTML:</label>
+                @IfNotNull.Model.HTML
+                <textarea name="HTML" rows="30" style="resize: none;width:100%;">@Model.HTML;</textarea>
+                @EndIf
+                @IfNull.Model.HTML
+                <textarea name="HTML" rows="30" style="resize: none;width:100%;"></textarea>
+                @EndIf
+            </div>
+		</div>
+	</div>
+    <div class="row" style="margin-top:5px">
+		<div class="col-xs-12">
+			Keys:
+		</div>
+	</div>
+    <div class="row" style="margin-top:5px">
+		<div class="col-xs-12">
+			To create a date input: &#60;sws type="inputdate" name="inputdate1" &#47;&#62;
+		</div>
+	</div>
+    <div class="row" style="margin-top:5px">
+		<div class="col-xs-12">
+			To create a text input: &#60;sws type="inputtext" name="inputtext1" &#47;&#62;
+		</div>
+	</div>
+    <div class="row" style="margin-top:5px">
+		<div class="col-xs-12">
+			To create a select input: &#60;sws type="select" name="select1" &#47;&#62;
+		</div>
+	</div>
+    <div class="row" style="margin-top:5px">
+		<div class="col-xs-12">
+			To create a variable: &#60;sws type="var" name="var1" &#47;&#62;
+		</div>
+	</div>
+	<div class="row row-centered" style="margin-top:5px">
+		<div class="input-group col-centered">
+			<button type="submit" value="save" name="action" style="margin-left:5px" class="btn btn-primary">Save</button>
+            <button type="submit" value="cancel" name="action" style="margin-left:5px" class="btn btn-danger">Cancel</button>
+		</div>
+	</div>
+</div>

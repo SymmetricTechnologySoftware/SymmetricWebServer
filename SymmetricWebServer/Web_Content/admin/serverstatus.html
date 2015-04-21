@@ -1,0 +1,41 @@
+﻿@Master['master']
+
+@Section['content']
+
+<style>
+    /* centered columns styles */
+    .row-centered {
+        text-align: center;
+    }
+
+    .col-centered {
+        display: inline-block;
+        float: none;
+        /* reset the text-align */
+        text-align: left;
+        /* inline-block space fix */
+        margin-right: -4px;
+    }
+
+    label#iDefaultDatabaseLabel {
+        width: auto;
+        padding-left: 4px;
+    }
+</style>
+
+<form role="form" autocomplete="off" class="form-horizontal">
+    <div class="row row-right">
+        <div class="col-xs-5 col-right">
+            <div class="form-group">
+                <label>IP Addresses Online:</label>
+                <br />
+                @Each.Model
+                <a href="@Currentserverstatus">@Current</a>
+                <br />
+                @EndEach
+            </div>
+		</div>
+	</div>
+</form>
+
+@EndSection

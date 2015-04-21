@@ -1,0 +1,88 @@
+﻿<script type="text/javascript">
+
+    function PrintElem(elem) {
+        Popup($(elem).html());
+    }
+
+    function Popup(data) {
+        var mywindow = window.open("", "Platform for System Intergation", "");
+        mywindow.document.write("<html><head><title>Platform for System Intergation</title>");
+        mywindow.document.write("<link href=\"@Path['~/dist/css/bootstrap.min.css'];\" rel=\"stylesheet\"/>");
+        mywindow.document.write("<link href=\"@Path['~/dist/css/navbar-fixed-top.css'];\" rel=\"stylesheet\"/>");
+        mywindow.document.write("<link href=\"@Path['~/dist/css/metro-bootstrap.min.css'];\" rel=\"stylesheet\"/>");
+        mywindow.document.write("<style> td { page-break-inside: avoid; } </style>");
+        mywindow.document.write("</head><body>");
+        mywindow.document.write(data);
+        mywindow.document.write("</body></html>");
+
+        mywindow.location.reload();
+        mywindow.focus();
+        mywindow.print();
+        //mywindow.close();
+
+        return true;
+    }
+
+</script>
+
+
+<form role="form" id="reportForm" method="post" autocomplete="off" action="/viewreports?action=display&id=@Model.ReportItem.ID">
+    <input type="hidden" name="objectID" value="@Model.ReportItem.ID" class="form-control">
+    <div class="container">
+        @IfNotNull.Model.FormHTML
+            @Model.FormHTML
+        @EndIf
+	
+        <div class="row row-centered" style="margin-top:5px">
+            @IfNotNull.Model.FormHTML
+                <button type="button" name="action" style="margin-left:5px" id="btnRun" class="btn btn-default glyphicon-refresh-animate">Run</button>
+                <script>
+                    $("#btnRun").click(function () {
+                        DisplayData();
+                    });
+                </script>
+            @EndIf
+            <button type="button" name="action" style="margin-left:5px" id="btnPrint" class="btn btn-default" onclick="PrintElem('#iDivHTML')">Print</button>
+        </div>
+    </div>
+</form> 
+<br/>
+<br/>
+
+<div class="row">
+	<div class="text-center">
+		<img src="/resources/spinner.gif" id="loading-indicator"/>
+	</div>
+</div>
+<div class="row row-left">
+	<div id="iDivHTML" class="col-xs-12 col-left">
+		@IfNotNull.Model.TemplateHTML
+			@Context.TemplateHTML
+		@EndIf
+	</div>
+</div>
+
+<script>
+    function DisplayData() {
+        $('#loading-indicator').hide();
+        $("#iDivHTML").html("");
+
+        var cancelTimer = false;
+        setTimeout(function () {
+            if (!cancelTimer) {
+                $('#loading-indicator').show();
+            }
+        }, 500);
+
+        $.post("getreport", $("#reportForm").serialize(), function (data) {
+            cancelTimer = true;
+            $("#iDivHTML").html(data);
+            $('#loading-indicator').hide();
+        });
+    }
+
+
+    window.onload = function () {
+        DisplayData();
+    };
+</script>

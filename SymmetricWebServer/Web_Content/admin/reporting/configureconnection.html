@@ -1,0 +1,141 @@
+﻿<style>
+    /* centered columns styles */
+    .row-centered {
+        text-align: center;
+    }
+
+    .col-centered {
+        display: inline-block;
+        float: none;
+        /* reset the text-align */
+        text-align: left;
+        /* inline-block space fix */
+        margin-right: -4px;
+    }
+
+    label#iDefaultDatabaseLabel {
+        width: auto;
+        padding-left: 4px;
+    }
+</style>
+
+	<div class="row row-centered">
+		<div class="col-xs-6 col-centered">
+			<input type="hidden" name="objectID" value="@Model.ID" class="form-control">
+		</div>
+	</div>
+    <div class="row row-centered" style="margin-top:5px">
+		<div class="col-xs-6 col-centered">
+            <div class="form-group">
+				<label>Connection Name:</label>
+				<input type="text" name="Name" value="@Model.Name" class="form-control"/>
+            </div>
+		</div>
+	</div>
+		<div class="row row-centered" style="margin-top:5px">
+		<div class="col-xs-6 col-centered">
+			<input type="radio" name="ConnectionTypes" id="iMySQL" @If.Model.IsMySQL checked @EndIf value="mysql" />MySQL<br>
+			<input type="radio" name="ConnectionTypes" id="iMSSQL" @IfNot.Model.IsMySQL checked @EndIf value="mssql" />MSSQL
+		</div>
+	</div>
+	<div class="row row-centered" style="margin-top:5px">
+		<div class="col-xs-6 col-centered">
+            <div class="form-group">
+				<label>Server Address:</label>
+				<input type="text" name="Host" value="@Model.Host" class="form-control"/>
+            </div>
+		</div>
+	</div>
+	<div class="row row-centered" style="margin-top:5px">
+		<div class="col-xs-6 col-centered">
+            <div class="form-group">
+				<label>Port:</label>
+				<input type="text" name="ConnPort" id="iConnPort" value="@Model.ConnPort" class="form-control"/>
+            </div>
+		</div>
+	</div>
+	<div class="row row-centered" style="margin-top:5px">
+		<div class="col-xs-6 col-centered">
+            <div class="form-group">
+				<label>Username:</label>
+				<input type="text" name="UserName" value="@Model.Username" class="form-control" />
+            </div>
+		</div>
+	</div>
+	<div class="row row-centered" style="margin-top:5px">
+		<div class="col-xs-6 col-centered">
+            <div class="form-group">
+				<label>Password:</label>
+				<input type="password" name="Password" value="@Model.Password" class="form-control"/>
+            </div>
+		</div>
+	</div>
+	<div class="form-group row row-centered" style="margin-top:5px">
+		<div class="col-xs-6 col-centered">
+                <div class="form-group">
+				<label>Default Database:</label>
+				<select class="form-control" id="iDefaultDatabase" name="DefaultDatabase">
+				    @Each.Databases
+                        <option value="@Current.Name" @Current.IsSelected>@Current.Name</option>
+				    @EndEach
+				</select>
+                <br />
+                <button type="submit" id="iRefresh" value="refresh" name="action" class="btn btn-primary">Refresh</button>
+            </div>
+		</div>
+    </div>
+    <div class="row row-centered" style="margin-top:5px">
+		<div class="input-group col-centered">
+			<button type="submit" class="btn btn-primary" name="action" value="test">Test Connection</button>
+		</div>
+	</div>
+    <div class="row row-centered" style="margin-top:5px">
+		<div class="input-group col-centered">
+			<button type="submit" value="save" name="action" style="margin-left:5px" class="btn btn-primary">Save</button>
+            <button type="submit" value="cancel" name="action" style="margin-left:5px" class="btn btn-danger">Cancel</button>
+		</div>
+	</div>
+
+
+<script>
+
+    function DisableDB() {
+        $("#iDefaultDatabaseLabel").attr("disabled", "disabled");
+        $("#iDefaultDatabase").attr("disabled", "disabled");
+        $("#iRefresh").attr("disabled", "disabled");
+    }
+
+    function EnableDB() {
+        $("#iDefaultDatabaseLabel").removeAttr("disabled");
+        $("#iDefaultDatabase").removeAttr("disabled");
+        $("#iRefresh").removeAttr("disabled");
+    }
+
+    function DisablePort() {
+        $("#iConnPort").attr("disabled", "disabled");
+    }
+
+    function EnablePort() {
+        $("#iConnPort").removeAttr("disabled");
+    }
+
+    $('#iMySQL').change(function () {
+        if (this.checked) {
+            EnablePort();
+        }
+    });
+
+    $('#iMSSQL').change(function () {
+        if (this.checked) {
+            DisablePort();
+            EnableDB();
+        }
+    });
+
+    window.onload = function () {
+        @IfNot.Model.IsMySQL 
+            DisablePort();
+        @EndIf
+    };
+
+</script>
