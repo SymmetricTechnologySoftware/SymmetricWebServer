@@ -30,6 +30,10 @@ namespace WebServer.Modules
         protected const string Success = "success";
         protected const string Failed = "failed";
 
+        protected const string NavBar = "navbar";
+        protected const string Hidden = "hidden";
+        protected const string Visible = "visible";
+
         protected const string ID = "id";
 
         protected const string Failed_InvalidID = "id";
@@ -89,6 +93,16 @@ namespace WebServer.Modules
                         break;
                     case AccessLevels.None:
                         break;
+                }
+
+                if (this.Request.Query[Master.NavBar] != null)
+                {
+                    switch (((string)this.Request.Query[Master.NavBar]).ToLower())
+                    {
+                        case Master.Hidden:
+                            this.Context.ViewBag.IsNavBarHidden = true;
+                            break;
+                    }
                 }
                 return null;
             };

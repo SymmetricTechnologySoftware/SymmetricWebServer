@@ -71,6 +71,10 @@ namespace UserShared
                     return "";
                 }
                 this.DLLoaded = false;
+                if (!File.Exists("FingerPrint.dll"))
+                {
+                    return "Cannot find FingerPrint.dll.";
+                }
                 _DLLHandle = Assembly.LoadFrom("FingerPrint.dll");
 
                 if (_DLLHandle == null) return "Cannot find FingerPrint.dll.";

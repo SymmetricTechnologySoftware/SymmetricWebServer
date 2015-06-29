@@ -294,21 +294,29 @@ namespace UserShared
                 cmd.Parameters.Add(new SqliteParameter("@fullname", fullName));
 
                 byte[] password = user.Password;
-                if (user.PasswordChanged)
+                if (!customID && user.PasswordChanged)
                 {
                     if (String.IsNullOrWhiteSpace(user.NewPassword))
                     {
                         return "The password cannot be blank.";
                     }
                     password = User.GenerateSHA256(user.NewPassword);
+                    cmd.Parameters.Add(new SqliteParameter("password", password));
                 }
-                cmd.Parameters.Add(new SqliteParameter("password", password));
+                else if (customID)
+                {
+                    cmd.Parameters.Add(new SqliteParameter("password", user.Password));
+                }
                 cmd.Parameters.Add(new SqliteParameter("@securityLevel", securityLevel));
-
 
                 if (user.ID > 0 && !customID)
                 {
-                    cmd.CommandText = "UPDATE User SET description = @description, fullname = @fullname, password = @password, securityLevel = @securityLevel";
+                    cmd.CommandText = "UPDATE User SET description = @description, fullname = @fullname, securityLevel = @securityLevel";
+                    if (user.PasswordChanged)
+                    {
+                        cmd.CommandText += ", password = @password";
+                    }
+
                 }
                 else
                 {

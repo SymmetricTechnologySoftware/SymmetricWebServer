@@ -241,16 +241,20 @@ namespace WebServer.Modules.ViewReport
                         result += "<tr>";
                         for (int i = 0; i < reader.FieldCount; ++i)
                         {
-                            string value = WebUtility.HtmlEncode(reader[i].ToString());
-                            if (i == 0)
+                            string value = reader[i].ToString();
+                            if (!(value.StartsWith("<") && value.EndsWith("/>")))
                             {
-                                if (String.Equals(isSame, value))
+                                value = WebUtility.HtmlEncode(value);
+                                if (i == 0)
                                 {
-                                    value = "";
-                                }
-                                else
-                                {
-                                    isSame = value;
+                                    if (String.Equals(isSame, value))
+                                    {
+                                        value = "";
+                                    }
+                                    else
+                                    {
+                                        isSame = value;
+                                    }
                                 }
                             }
                             result += String.Format("<td>{0}</td>", value);

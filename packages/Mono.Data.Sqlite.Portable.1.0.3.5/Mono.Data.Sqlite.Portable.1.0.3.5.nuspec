@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Mono.Data.Sqlite.Portable</id>
+    <version>1.0.3.5</version>
+    <title>Mono.Data.Sqlite Plugin for Xamarin and Windows</title>
+    <authors>Matthew Leibowitz</authors>
+    <owners>Matthew Leibowitz</owners>
+    <licenseUrl>http://www.dotnetdevaddict.co.za/projects/mono.data.sqlite.portable#license</licenseUrl>
+    <projectUrl>http://www.dotnetdevaddict.co.za/projects/mono.data.sqlite.portable</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Add Mono.Data.Sqlite to any Xamarin or Windows .NET app. 
+Supports Xamarin.Android, Xamarin.iOS, Windows 8, Windows Desktop and Windows Phone 8</description>
+    <copyright>.NET Development Addict</copyright>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="Mono.Data.Sqlite" targetFramework="MonoAndroid0.0" />
+      <frameworkAssembly assemblyName="Mono.Data.Sqlite" targetFramework="MonoTouch0.0" />
+      <frameworkAssembly assemblyName="Mono.Data.Sqlite" targetFramework="Unsupported0.0" />
+      <frameworkAssembly assemblyName="System.Transactions" targetFramework=".NETFramework4.0" />
+      <frameworkAssembly assemblyName="System.Transactions" targetFramework="MonoAndroid0.0" />
+      <frameworkAssembly assemblyName="System.Transactions" targetFramework="MonoTouch0.0" />
+      <frameworkAssembly assemblyName="System.Transactions" targetFramework="Unsupported0.0" />
+      <frameworkAssembly assemblyName="System.Data" targetFramework=".NETFramework4.0" />
+      <frameworkAssembly assemblyName="System.Data" targetFramework="MonoAndroid0.0" />
+      <frameworkAssembly assemblyName="System.Data" targetFramework="MonoTouch0.0" />
+      <frameworkAssembly assemblyName="System.Data" targetFramework="Unsupported0.0" />
+    </frameworkAssemblies>
+  </metadata>
+</package>

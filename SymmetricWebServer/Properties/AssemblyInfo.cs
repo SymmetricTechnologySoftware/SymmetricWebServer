@@ -13,7 +13,7 @@ using WebServer;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Symmetric Technology Software")]
 [assembly: AssemblyProduct(Globals.ApplicationTitle)]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyCopyright("Copyright © 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
